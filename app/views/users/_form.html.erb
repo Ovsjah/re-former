@@ -10,6 +10,7 @@
   <input type="submit" value="Submit">
 </form
 
+# it's for edit/update
 <%= form_tag "/users/#{@user.id}", method: :patch do %>
   <%= label_tag :username %>
   <%= text_field_tag "user[username]" %><br>
@@ -19,20 +20,25 @@
   <%= password_field_tag "user[password]" %><br>
   <%= submit_tag 'Submit' %>
 <% end %>
--->
 
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  <% end %>
+<%= form_for @user do |f| %>
+  <%= render "shared/error_messages", obj: @user %>
   <%= f.label :username, "Your Name:" %>
   <%= f.text_field :username, placeholder: "Enter username" %><br>
   <%= f.label :email, "Your Email:" %>
-  <%= f.text_field :email, placeholder: "Enter email" %><br>
+  <%= f.email_field :email, placeholder: "Enter email" %><br>
+  <%= f.label :password, "Your Password:" %>
+  <%= f.password_field :password, placeholder: "Enter password" %><br>
+  <%= f.submit %>
+<% end %>
+-->
+
+<%= form_with model: user do |f| %>
+  <%= render "shared/error_messages", obj: user %>
+  <%= f.label :username, "Your Name:" %>
+  <%= f.text_field :username, placeholder: "Enter username" %><br>
+  <%= f.label :email, "Your Email:" %>
+  <%= f.email_field :email, placeholder: "Enter email" %><br>
   <%= f.label :password, "Your Password:" %>
   <%= f.password_field :password, placeholder: "Enter password" %><br>
   <%= f.submit %>
